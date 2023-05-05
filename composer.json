@@ -1,0 +1,13 @@
+{
+    "name": "baiba/rick-and-morty",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.5",
+        "twig/twig": "^3.5",
+        "nikic/fast-route": "^1.3"
+    }
+}
