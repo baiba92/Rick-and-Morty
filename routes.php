@@ -1,11 +1,15 @@
 <?php declare(strict_types=1);
 
+use App\Controllers\CharacterController;
+use App\Controllers\EpisodeController;
+use App\Controllers\LocationController;
+
 return [
-    ['GET', '/', ['App\Controllers\CharacterController', 'search']],
-    ['GET', '/search', ['App\Controllers\CharacterController', 'search']],
-    ['GET', '/episodes', ['App\Controllers\EpisodeController', 'all']],
-    ['GET', '/episode', ['App\Controllers\EpisodeController', 'single']],
-    ['GET', '/character', ['App\Controllers\CharacterController', 'single']],
-    ['GET', '/locations', ['App\Controllers\LocationController', 'all']],
-    ['GET', '/location', ['App\Controllers\LocationController', 'single']]
+    ['GET', '/', [CharacterController::class, 'search']],
+    ['GET', '/search', [CharacterController::class, 'search']],
+    ['GET', '/episodes', [EpisodeController::class, 'all']],
+    ['GET', '/episode', [EpisodeController::class, 'single']],
+    ['GET', '/character', [CharacterController::class, 'single']],
+    ['GET', '/locations', [LocationController::class, 'all']],
+    ['GET', '/location', [LocationController::class, 'single']]
 ];
