@@ -4,18 +4,13 @@
     <div class="flex flex-wrap gap-4 justify-center">
         <div class="grid grid-cols-1">
             <h2 class="pt-4 text-4xl font-bold tracking-tight text-white text-center">
-                {{ episode.name }}
+                {{ location.name }}
             </h2>
-            <p class="pb-4 font-bold text-lg text-white text-center">
-                (Season {{ episode.seasonId[2:1] }}, episode {{ episode.seasonId[4:] }})
-            </p>
             <p class="text-lg text-white text-center">
-                Episode ID: {{ episode.id }}
-                <br>
-                Air date: {{ episode.airDate }}
+                Location ID: {{ location.id }}
             </p>
             <h2 class="py-4 text-2xl font-bold tracking-tight text-white text-center">
-                Characters ({{ episode.characterIds|length }})
+                Residents ({{ location.residentIds|length }})
             </h2>
         </div>
     </div>

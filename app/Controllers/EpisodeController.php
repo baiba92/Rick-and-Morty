@@ -16,7 +16,7 @@ class EpisodeController
 
     public function all(): View
     {
-        $episodes = $this->client->fetchEpisodes();
+        $episodes = $this->client->fetchEpisodesById(range(1, 51));
         return new View('episodes', [
             'episodes' => $episodes
         ]);
@@ -24,9 +24,12 @@ class EpisodeController
 
     public function single(): View
     {
-        $episode = $this->client->fetchSingleEpisode((int)$_GET['episodeId']);
+        $episode = $this->client->fetchSingleEpisodeById((int)$_GET['episodeId']);
+        $characters = $this->client->fetchCharactersById($episode->characterIds());
+
         return new View('singleEpisode', [
-            'episode' => $episode
+            'episode' => $episode,
+            'characters' => $characters
         ]);
     }
 }

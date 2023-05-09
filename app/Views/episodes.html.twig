@@ -1,93 +1,101 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-<div class="flex justify-center">
-    <div class="grid grid-cols-3 gap-4 mx-auto">
-        <ul>
-            <h2 class="py-2 text-4xl font-bold tracking-tight text-white">
-                Season 1
-            </h2>
-            {% for episode in episodes %}
-                {% if episode.seasonId[2:1] == '1' %}
-                    <li class="text-lg text-white">
-                        <form action="/episode" method="GET">
-                            {{ episode.seasonId[4:] }}.
-                            <button type="submit" name="episodeId" value="{{ episode.id }}" class="hover:text-yellow-500">
-                                {{ episode.name }}
-                            </button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            <h2 class="py-2 text-4xl font-bold tracking-tight text-white">
-                Season 2
-            </h2>
-            {% for episode in episodes %}
-                {% if episode.seasonId[2:1] == '2' %}
-                    <li class="text-lg text-white">
-                        <form action="/episode" method="GET">
-                            {{ episode.seasonId[4:] }}.
-                            <button type="submit" name="episodeId" value="{{ episode.id }}" class="hover:text-yellow-500">
-                                {{ episode.name }}
-                            </button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            <h2 class="py-2 text-4xl font-bold tracking-tight text-white">
-                Season 3
-            </h2>
-            {% for episode in episodes %}
-                {% if episode.seasonId[2:1] == '3' %}
-                    <li class="text-lg text-white">
-                        <form action="/episode" method="GET">
-                            {{ episode.seasonId[4:] }}.
-                            <button type="submit" name="episodeId" value="{{ episode.id }}" class="hover:text-yellow-500">
-                                {{ episode.name }}
-                            </button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            <h2 class="py-2 text-4xl font-bold tracking-tight text-white">
-                Season 4
-            </h2>
-            {% for episode in episodes %}
-                {% if episode.seasonId[2:1] == '4' %}
-                    <li class="text-lg text-white">
-                        <form action="/episode" method="GET">
-                            {{ episode.seasonId[4:] }}.
-                            <button type="submit" name="episodeId" value="{{ episode.id }}" class="hover:text-yellow-500">
-                                {{ episode.name }}
-                            </button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            <h2 class="py-2 text-4xl font-bold tracking-tight text-white">
-                Season 5
-            </h2>
-            {% for episode in episodes %}
-                {% if episode.seasonId[2:1] == '5' %}
-                    <li class="text-lg text-white">
-                        <form action="/episode" method="GET">
-                            {{ episode.seasonId[4:] }}.
-                            <button type="submit" name="episodeId" value="{{ episode.id }}" class="hover:text-yellow-500">
-                                {{ episode.name }}
-                            </button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+    <h2 class="pb-6 text-4xl font-bold tracking-tight text-white text-center">
+        Episodes
+    </h2>
+    <div class="flex justify-center">
+        <div class="grid grid-cols-3 gap-4 mx-auto">
+            <ul>
+                <h2 class="py-2 text-3xl font-bold tracking-tight text-white">
+                    Season 1
+                </h2>
+                {% for episode in episodes %}
+                    {% if episode.seasonId[2:1] == '1' %}
+                        <li class="text-lg text-white">
+                            <form action="/episode" method="GET">
+                                {{ episode.seasonId[4:] }}.
+                                <button type="submit" name="episodeId" value="{{ episode.id }}"
+                                        class="hover:text-yellow-500">
+                                    {{ episode.name }}
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                <h2 class="py-2 text-3xl font-bold tracking-tight text-white">
+                    Season 2
+                </h2>
+                {% for episode in episodes %}
+                    {% if episode.seasonId[2:1] == '2' %}
+                        <li class="text-lg text-white">
+                            <form action="/episode" method="GET">
+                                {{ episode.seasonId[4:] }}.
+                                <button type="submit" name="episodeId" value="{{ episode.id }}"
+                                        class="hover:text-yellow-500">
+                                    {{ episode.name }}
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                <h2 class="py-2 text-3xl font-bold tracking-tight text-white">
+                    Season 3
+                </h2>
+                {% for episode in episodes %}
+                    {% if episode.seasonId[2:1] == '3' %}
+                        <li class="text-lg text-white">
+                            <form action="/episode" method="GET">
+                                {{ episode.seasonId[4:] }}.
+                                <button type="submit" name="episodeId" value="{{ episode.id }}"
+                                        class="hover:text-yellow-500">
+                                    {{ episode.name }}
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                <h2 class="py-2 text-3xl font-bold tracking-tight text-white">
+                    Season 4
+                </h2>
+                {% for episode in episodes %}
+                    {% if episode.seasonId[2:1] == '4' %}
+                        <li class="text-lg text-white">
+                            <form action="/episode" method="GET">
+                                {{ episode.seasonId[4:] }}.
+                                <button type="submit" name="episodeId" value="{{ episode.id }}"
+                                        class="hover:text-yellow-500">
+                                    {{ episode.name }}
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                <h2 class="py-2 text-3xl font-bold tracking-tight text-white">
+                    Season 5
+                </h2>
+                {% for episode in episodes %}
+                    {% if episode.seasonId[2:1] == '5' %}
+                        <li class="text-lg text-white">
+                            <form action="/episode" method="GET">
+                                {{ episode.seasonId[4:] }}.
+                                <button type="submit" name="episodeId" value="{{ episode.id }}"
+                                        class="hover:text-yellow-500">
+                                    {{ episode.name }}
+                                </button>
+                            </form>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</div>
 {% endblock %}

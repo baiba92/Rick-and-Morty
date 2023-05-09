@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h2 class="pb-6 text-4xl font-bold tracking-tight text-white text-center">
+        Locations
+    </h2>
+    <div class="flex flex-wrap justify-center">
+        <div class="grid grid-cols-3 gap-4 text-lg text-white mx-auto">
+            <div>
+                <ul>
+                    {% for location in locations %}
+                        {% if loop.index in range(0, 42) %}
+                            <li>
+                                <form action="/location" method="GET">
+                                    {{ loop.index }}.
+                                    <button type="submit" name="locationId" value="{{ location.id }}"
+                                            class="hover:text-yellow-500">
+                                        {{ location.name }}
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    {% for location in locations %}
+                        {% if loop.index in range(43, 84) %}
+                            <li>
+                                <form action="/location" method="GET">
+                                    {{ loop.index }}.
+                                    <button type="submit" name="locationId" value="{{ location.id }}"
+                                            class="hover:text-yellow-500">
+                                        {{ location.name }}
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    {% for location in locations %}
+                        {% if loop.index in range(85, 126) %}
+                            <li>
+                                <form action="/location" method="GET">
+                                    {{ loop.index }}.
+                                    <button type="submit" name="locationId" value="{{ location.id }}"
+                                            class="hover:text-yellow-500">
+                                        {{ location.name }}
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

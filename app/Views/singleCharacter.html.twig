@@ -2,37 +2,11 @@
 
 {% block content %}
     <div class="flex flex-wrap gap-4 justify-center">
-        <div class="flex flex-row basis-2/5 items-center rounded-lg shadow-md shadow-gray-500 md:h-52 md:flex-row md:max-w-xl bg-gray-800">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-52 md:w-52 md:rounded-none md:rounded-l-lg"
-                 src="{{ character.image }}"
-                 alt=""/>
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <form action="/character" method="GET">
-                    <button type="submit" name="characterId" value="{{ character.id }}" class="text-2xl font-bold tracking-tight text-white hover:text-yellow-500">
-                        {{ character.name }}
-                    </button>
-                </form>
-                <p class="mb-3 font-bold text-sm text-white">
-                    {{ character.status }} - {{ character.species }}
-                </p>
-                <p class="font-normal text-sm text-gray-400">
-                    Last known location:
-                </p>
-                <p class="mb-3 font-normal text-base text-white">
-                    {{ character.location }}
-                </p>
-                <p class="font-normal text-sm text-gray-400">
-                    First seen in:
-                </p>
-                <form action="/episode" method="GET">
-                    <button type="submit" name="episodeId" value="{{ firstEpisode }}" class="mb-3 font-normal text-base text-white hover:text-yellow-500">
-                        {{ episodes[0].name }}
-                    </button>
-                </form>
-            </div>
-        </div>
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <div class="flex items-center py-2 text-xl justify-center font-bold text-white bg-gray-700 leading-8">
+
+        {{ block('character', 'base.html.twig') }}
+
+        <div class="relative overflow-x-auto shadow-md shadow-gray-500 rounded-lg">
+            <div class="flex items-center p-3 text-xl justify-center font-bold text-white bg-gray-700 leading-8">
                 <span class="tracking-wide">Episodes with {{ character.name }}</span>
             </div>
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -56,10 +30,10 @@
                         {{ episode.name }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ episode.episode }}
+                        {{ episode.seasonId }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ episode.air_date }}
+                        {{ episode.airDate }}
                     </td>
                 </tr>
                 {% endfor %}

@@ -31,13 +31,17 @@ class CharacterController
 
     public function single(): View
     {
-        $character = $this->client->fetchCharacterById($_GET['characterId']);
-        $episodes = $character->episodes();
-        $firstEpisode = $character->firstEpisode();
+        $character = $this->client->fetchSingleCharacterById($_GET['characterId']);
+
+        if (count($character->episodeIds()) > 1) {
+            $episodes = $this->client->fetchEpisodesById($character->episodeIds());
+        } else {
+            $episodes[] = $this->client->fetchSingleEpisodeById((int)$character->episodeIds()[0]);
+        }
+
         return new View('singleCharacter', [
             'character' => $character,
-            'episodes' => $episodes,
-            'firstEpisode' => $firstEpisode
+            'episodes' => $episodes
         ]);
     }
 }

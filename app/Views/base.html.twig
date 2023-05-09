@@ -18,15 +18,23 @@
     <form action="/episodes">
         <div class="flex border-2 rounded">
             <button type="submit"
-                    class="flex px-4 py-2 w-56 text-white justify-center border-l hover:bg-gray-800">List
+                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-800">List
                 episodes
+            </button>
+        </div>
+    </form>
+    <form action="/locations">
+        <div class="flex border-2 rounded">
+            <button type="submit"
+                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-800">List
+                locations
             </button>
         </div>
     </form>
     <form action="/">
         <div class="flex border-2 rounded">
             <button type="submit"
-                    class="flex px-4 py-2 w-56 text-white justify-center border-l hover:bg-gray-800">Show random characters
+                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-800">Random characters
             </button>
         </div>
     </form>
@@ -39,7 +47,46 @@
         </div>
     </form>
 </div>
-{% block content %}{% endblock %}
+{% block content %}
+
+    {% block character %}
+        <div class="flex flex-row basis-2/5 items-center rounded-lg shadow-md shadow-gray-500 md:h-52 md:flex-row md:max-w-xl bg-gray-800">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-52 md:w-52 md:rounded-none md:rounded-l-lg"
+                 src="{{ character.image }}"
+                 alt=""/>
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <form action="/character" method="GET">
+                    <button type="submit" name="characterId" value="{{ character.id }}"
+                            class="text-2xl font-bold text-left tracking-tight text-white hover:text-yellow-500">
+                        {{ character.name }}
+                    </button>
+                </form>
+                <p class="mb-3 font-bold text-sm text-white">
+                    {{ character.status }} - {{ character.species }}
+                </p>
+                <p class="font-normal text-sm text-gray-400">
+                    Last known location:
+                </p>
+                <form action="/location" method="GET">
+                    <button type="submit" name="locationId" value="{{ character.location.id }}"
+                            class="mb-3 font-normal text-base text-white hover:text-yellow-500">
+                        {{ character.location.name }}
+                    </button>
+                </form>
+                <p class="font-normal text-sm text-gray-400">
+                    First seen in:
+                </p>
+                <form action="/episode" method="GET">
+                    <button type="submit" name="episodeId" value="{{ character.firstEpisode.id }}"
+                            class="mb-3 font-normal text-base text-white hover:text-yellow-500">
+                        {{ character.firstEpisode.name }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endblock %}
 <footer class="py-12">
 </footer>
 </body>

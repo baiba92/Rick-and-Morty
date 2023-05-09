@@ -5,5 +5,7 @@ return [
     ['GET', '/search', ['App\Controllers\CharacterController', 'search']],
     ['GET', '/episodes', ['App\Controllers\EpisodeController', 'all']],
     ['GET', '/episode', ['App\Controllers\EpisodeController', 'single']],
-    ['GET', '/character', ['App\Controllers\CharacterController', 'single']]
+    ['GET', '/character', ['App\Controllers\CharacterController', 'single']],
+    ['GET', '/locations', ['App\Controllers\LocationController', 'all']],
+    ['GET', '/location', ['App\Controllers\LocationController', 'single']]
 ];
