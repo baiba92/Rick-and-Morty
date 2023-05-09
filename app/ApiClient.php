@@ -6,6 +6,7 @@ use App\Models\Character;
 use App\Models\Episode;
 use App\Models\Location;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use stdClass;
 
 class ApiClient
@@ -20,122 +21,162 @@ class ApiClient
 
     public function fetchRandomCharacters(): array
     {
-        if (!Cache::has('randomCharacters')) {
-            $response = $this->client->get(self::BASE_API . '/character', [
-                'query' => [
-                    'page' => floor(rand(1, 42))
-                ]
-            ]);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('randomCharacters', $responseJson, 10);
-        } else {
-            $responseJson = Cache::get('randomCharacters');
-        }
+        try {
+            if (!Cache::has('randomCharacters')) {
+                $response = $this->client->get(self::BASE_API . '/character', [
+                    'query' => [
+                        'page' => floor(rand(1, 42))
+                    ]
+                ]);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('randomCharacters', $responseJson, 10);
+            } else {
+                $responseJson = Cache::get('randomCharacters');
+            }
 
-        $characterContent = json_decode($responseJson);
-        return $this->createCharacterCollection($characterContent->results);
+            $characterContent = json_decode($responseJson);
+            return $this->createCharacterCollection($characterContent->results);
+
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
     public function fetchCharactersByName(string $character): array
     {
-        if (!Cache::has('charactersByName')) {
-            $response = $this->client->get(self::BASE_API . '/character', [
-                'query' => [
-                    'name' => $character
-                ]
-            ]);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('charactersByName', $responseJson);
-        } else {
-            $responseJson = Cache::get('charactersByName');
-        }
+        try {
+            if (!Cache::has('charactersByName')) {
+                $response = $this->client->get(self::BASE_API . '/character', [
+                    'query' => [
+                        'name' => $character
+                    ]
+                ]);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('charactersByName', $responseJson);
+            } else {
+                $responseJson = Cache::get('charactersByName');
+            }
 
-        $characterContent = json_decode($responseJson);
-        return $this->createCharacterCollection($characterContent->results);
+            $characterContent = json_decode($responseJson);
+            return $this->createCharacterCollection($characterContent->results);
+
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
     public function fetchCharactersById(array $ids): array
     {
-        if (!Cache::has('characters')) {
-            $response = $this->client->get(self::BASE_API . '/character/' . implode(',', $ids));
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('characters', $responseJson, 5);
-        } else {
-            $responseJson = Cache::get('characters');
-        }
+        try {
+            if (!Cache::has('characters')) {
+                $response = $this->client->get(self::BASE_API . '/character/' . implode(',', $ids));
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('characters', $responseJson, 5);
+            } else {
+                $responseJson = Cache::get('characters');
+            }
 
-        $characterContent = (array)json_decode($responseJson);
-        return $this->createCharacterCollection($characterContent);
+            $characterContent = (array)json_decode($responseJson);
+            return $this->createCharacterCollection($characterContent);
+
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
-    public function fetchSingleCharacterById(string $id): Character
+    public function fetchSingleCharacterById(string $id): ?Character
     {
-        if (!Cache::has('character_' . $id)) {
-            $response = $this->client->get(self::BASE_API . '/character/' . $id);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('character_' . $id, $responseJson);
-        } else {
-            $responseJson = Cache::get('character_' . $id);
-        }
+        try {
+            if (!Cache::has('character_' . $id)) {
+                $response = $this->client->get(self::BASE_API . '/character/' . $id);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('character_' . $id, $responseJson);
+            } else {
+                $responseJson = Cache::get('character_' . $id);
+            }
 
-        $characterContent = json_decode($responseJson);
-        return $this->createCharacter($characterContent);
+            $characterContent = json_decode($responseJson);
+            return $this->createCharacter($characterContent);
+
+        } catch (GuzzleException $exception) {
+            return null;
+        }
     }
 
     public function fetchLocationsById(array $ids): array
     {
-        if (!Cache::has('locations')) {
-            $response = $this->client->get(self::BASE_API . '/location/' . implode(',', $ids));
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('locations', $responseJson);
-        } else {
-            $responseJson = Cache::get('locations');
-        }
+        try {
+            if (!Cache::has('locations')) {
+                $response = $this->client->get(self::BASE_API . '/location/' . implode(',', $ids));
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('locations', $responseJson);
+            } else {
+                $responseJson = Cache::get('locations');
+            }
 
-        $locationContent = (array)json_decode($responseJson);
-        return $this->createLocationCollection($locationContent);
+            $locationContent = (array)json_decode($responseJson);
+            return $this->createLocationCollection($locationContent);
+
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
-    public function fetchSingleLocationById(int $id): Location
+    public function fetchSingleLocationById(int $id): ?Location
     {
-        if (!Cache::has('location_' . $id)) {
-            $response = $this->client->get(self::BASE_API . '/location/' . $id);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('location_' . $id, $responseJson, 5);
-        } else {
-            $responseJson = Cache::get('location_' . $id);
-        }
+        try {
+            if (!Cache::has('location_' . $id)) {
+                $response = $this->client->get(self::BASE_API . '/location/' . $id);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('location_' . $id, $responseJson, 5);
+            } else {
+                $responseJson = Cache::get('location_' . $id);
+            }
 
-        $locationContent = json_decode($responseJson);
-        return $this->createLocation($locationContent);
+            $locationContent = json_decode($responseJson);
+            return $this->createLocation($locationContent);
+
+        } catch (GuzzleException $exception) {
+            return null;
+        }
     }
 
     public function fetchEpisodesById(array $ids): array
     {
-        if (!Cache::has('episodes')) {
-            $response = $this->client->get(self::BASE_API . '/episode/' . implode(',', $ids));
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('episodes', $responseJson);
-        } else {
-            $responseJson = Cache::get('episodes');
-        }
+        try {
+            if (!Cache::has('episodes')) {
+                $response = $this->client->get(self::BASE_API . '/episode/' . implode(',', $ids));
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('episodes', $responseJson);
+            } else {
+                $responseJson = Cache::get('episodes');
+            }
 
-        $episodesContent = (array)json_decode($responseJson);
-        return $this->createEpisodesCollection($episodesContent);
+            $episodesContent = (array)json_decode($responseJson);
+            return $this->createEpisodesCollection($episodesContent);
+
+        } catch (GuzzleException $exception) {
+            return [];
+        }
     }
 
-    public function fetchSingleEpisodeById(int $id): Episode
+    public function fetchSingleEpisodeById(int $id): ?Episode
     {
-        if (!Cache::has('episode_' . $id)) {
-            $response = $this->client->get(self::BASE_API . '/episode/' . $id);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember('episode_' . $id, $responseJson);
-        } else {
-            $responseJson = Cache::get('episode_' . $id);
-        }
+        try {
+            if (!Cache::has('episode_' . $id)) {
+                $response = $this->client->get(self::BASE_API . '/episode/' . $id);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember('episode_' . $id, $responseJson);
+            } else {
+                $responseJson = Cache::get('episode_' . $id);
+            }
 
-        $episodeContent = json_decode($responseJson);
-        return $this->createEpisode($episodeContent);
+            $episodeContent = json_decode($responseJson);
+            return $this->createEpisode($episodeContent);
+
+        } catch (GuzzleException $exception) {
+            return null;
+        }
     }
 
     private function createCharacterCollection(array $characterContent): array
