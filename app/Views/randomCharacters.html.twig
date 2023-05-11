@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    {% include 'includes/filterBar.html.twig' %}
+
+    <div class="flex flex-wrap gap-4 justify-center pt-8">
+        {% for character in characters %}
+
+            {% include 'includes/characterCard.html.twig' %}
+
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -10,81 +10,40 @@
 </head>
 <body class="bg-gray-600">
 <header>
-    <h1 class="bg-gray-100 py-12 text-8xl text-center font-extrabold text-black">
-        Rick and Morty
-    </h1>
+    <form action="/">
+        <div class="flex justify-center bg-gray-100">
+            <button type="submit"
+                    class="py-12 text-8xl text-center font-extrabold text-black">Rick and Morty
+            </button>
+        </div>
+    </form>
 </header>
 <div class="flex flex-row gap-4 justify-center py-4 bg-black">
+    <form action="/characters">
+        <div class="flex border-2 rounded">
+            <button type="submit"
+                    class="flex px-4 py-2 w-64 text-white justify-center border-l hover:bg-gray-600">Characters
+            </button>
+        </div>
+    </form>
     <form action="/episodes">
         <div class="flex border-2 rounded">
             <button type="submit"
-                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-600">List
-                episodes
+                    class="flex px-4 py-2 w-64 text-white justify-center border-l hover:bg-gray-600">Episodes
             </button>
         </div>
     </form>
     <form action="/locations">
         <div class="flex border-2 rounded">
             <button type="submit"
-                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-600">List
-                locations
-            </button>
-        </div>
-    </form>
-    <form action="/">
-        <div class="flex border-2 rounded">
-            <button type="submit"
-                    class="flex px-4 py-2 w-44 text-white justify-center border-l hover:bg-gray-600">Random characters
-            </button>
-        </div>
-    </form>
-    <form action="/search" method="GET">
-        <div class="flex border-2 rounded">
-            <input type="text" name="character" class="px-4 py-2 w-96" placeholder="Find character by name">
-            <button type="submit"
-                    class="flex py-2 w-20 text-white justify-center border-l hover:bg-gray-600">Search
+                    class="flex px-4 py-2 w-64 text-white justify-center border-l hover:bg-gray-600">Locations
             </button>
         </div>
     </form>
 </div>
 {% block content %}
 
-    {% block character %}
-        <div class="flex flex-row basis-2/5 items-center rounded-lg shadow-md shadow-gray-500 md:h-52 md:flex-row md:max-w-xl bg-gray-800">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-52 md:w-52 md:rounded-none md:rounded-l-lg"
-                 src="{{ character.image }}"
-                 alt=""/>
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <form action="/character" method="GET">
-                    <button type="submit" name="characterId" value="{{ character.id }}"
-                            class="text-2xl font-bold text-left tracking-tight text-white hover:text-yellow-500">
-                        {{ character.name }}
-                    </button>
-                </form>
-                <p class="mb-3 font-bold text-sm text-white">
-                    {{ character.status }} - {{ character.species }}
-                </p>
-                <p class="font-normal text-sm text-gray-400">
-                    Last known location:
-                </p>
-                <form action="/location" method="GET">
-                    <button type="submit" name="locationId" value="{{ character.location.id }}"
-                            class="mb-3 font-normal text-base text-white hover:text-yellow-500">
-                        {{ character.location.name }}
-                    </button>
-                </form>
-                <p class="font-normal text-sm text-gray-400">
-                    First seen in:
-                </p>
-                <form action="/episode" method="GET">
-                    <button type="submit" name="episodeId" value="{{ character.firstEpisode.id }}"
-                            class="mb-3 font-normal text-base text-white hover:text-yellow-500">
-                        {{ character.firstEpisode.name }}
-                    </button>
-                </form>
-            </div>
-        </div>
-    {% endblock %}
+    {% include 'includes/characterCard.html.twig' %}
 
 {% endblock %}
 <footer class="py-12">

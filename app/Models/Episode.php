@@ -5,18 +5,18 @@ namespace App\Models;
 class Episode
 {
     private int $id;
-    private ?string $name;
-    private ?string $airDate;
-    private ?string $seasonId;
-    private ?array $characterIds;
+    private string $name;
+    private string $airDate;
+    private string $seasonId;
+    private array $characterIds;
 
     public function __construct
     (
         int    $id,
-        string $name = null,
-        string $airDate = null,
-        string $seasonId = null,
-        array  $characterIds = null
+        string $name,
+        string $airDate,
+        string $seasonId,
+        array  $characterIds
     )
     {
         $this->id = $id;

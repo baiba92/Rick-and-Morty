@@ -42,23 +42,41 @@ class ApiClient
         }
     }
 
-    public function fetchCharactersByName(string $character): array
+    public function filterCharacters
+    (
+        string $name,
+        string $status,
+        string $species,
+        string $gender,
+        int $page = 1
+    ): array
     {
         try {
-            if (!Cache::has('charactersByName')) {
-                $response = $this->client->get(self::BASE_API . '/character', [
-                    'query' => [
-                        'name' => $character
-                    ]
-                ]);
-                $responseJson = $response->getBody()->getContents();
-                Cache::remember('charactersByName', $responseJson);
+            $key = 'character_' . $name . '_' . $status . '_' . $species . '_' . $gender;
+            if (!Cache::has($key)) {
+            $response = $this->client->get(self::BASE_API . '/character', [
+                'query' => [
+                    'page' => $page,
+                    'name' => $name,
+                    'status' => $status,
+                    'species' => $species,
+                    'gender' => $gender
+                ]
+            ]);
+            $responseJson = $response->getBody()->getContents();
+            Cache::remember($key, $responseJson);
             } else {
-                $responseJson = Cache::get('charactersByName');
+                $responseJson = Cache::get($key);
             }
 
             $characterContent = json_decode($responseJson);
-            return $this->createCharacterCollection($characterContent->results);
+            $pages = $characterContent->info->pages;
+            $content = $this->createCharacterCollection($characterContent->results);
+
+            return [
+                'pages' => $pages,
+                'content' => $content
+            ];
 
         } catch (GuzzleException $exception) {
             return [];
@@ -220,6 +238,7 @@ class ApiClient
             $characterContent->name,
             $characterContent->status,
             $characterContent->species,
+            $characterContent->gender,
             $this->fetchSingleLocationById($locationId),
             $characterContent->image,
             $episodeIds,

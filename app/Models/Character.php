@@ -8,11 +8,11 @@ class Character
     private string $name;
     private string $status;
     private string $species;
+    private string $gender;
     private Location $location;
     private string $image;
     private array $episodeIds;
-    private ?Episode $firstEpisode;
-
+    private Episode $firstEpisode;
 
     public function __construct
     (
@@ -20,16 +20,18 @@ class Character
         string   $name,
         string   $status,
         string   $species,
-        Location   $location,
+        string   $gender,
+        Location $location,
         string   $image,
         array    $episodeIds,
-        ?Episode $firstEpisode = null
+        Episode  $firstEpisode
     )
     {
         $this->id = $id;
         $this->name = $name;
         $this->status = $status;
         $this->species = $species;
+        $this->gender = $gender;
         $this->location = $location;
         $this->image = $image;
         $this->episodeIds = $episodeIds;
@@ -56,6 +58,11 @@ class Character
         return $this->species;
     }
 
+    public function gender(): string
+    {
+        return $this->gender;
+    }
+
     public function location(): Location
     {
         return $this->location;
@@ -71,8 +78,9 @@ class Character
         return $this->episodeIds;
     }
 
-    public function firstEpisode(): ?Episode
+    public function firstEpisode(): Episode
     {
         return $this->firstEpisode;
     }
+
 }

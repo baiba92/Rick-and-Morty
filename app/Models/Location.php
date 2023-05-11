@@ -1,14 +1,19 @@
-<?php  declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 class Location
 {
     private int $id;
-    private ?string $name;
-    private ?array $residentIds;
+    private string $name;
+    private array $residentIds;
 
-    public function __construct(int $id, ?string $name, ?array $residentIds)
+    public function __construct
+    (
+        int    $id,
+        string $name,
+        array  $residentIds
+    )
     {
         $this->id = $id;
         $this->name = $name;
@@ -20,12 +25,12 @@ class Location
         return $this->id;
     }
 
-    public function name(): ?string
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function residentIds(): ?array
+    public function residentIds(): array
     {
         return $this->residentIds;
     }

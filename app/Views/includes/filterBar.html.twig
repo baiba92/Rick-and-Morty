@@ -1,0 +1,52 @@
+<h2 class="pb-6 pt-8 text-4xl font-bold tracking-tight text-white text-center">
+    Filter characters
+</h2>
+<div class="flex flex-wrap gap-4 justify-center pt-8">
+    <div class="grid grid-cols-1 pb-6">
+        <form action="/filter" method="GET">
+            <label for="name" class="pr-1 pl-4 text-white">Enter name</label>
+            <input type="text" name="name" id="name" class="text-black p-1">
+            <label for="status" class="pr-1 pl-4 text-white">Select status</label>
+            <select name="status" id="status" class="text-black p-1">
+                <option value="">All</option>
+                <option value="alive">Alive</option>
+                <option value="dead">Dead</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <label for="species" class="pr-1 pl-4 text-white">Select species</label>
+            <select name="species" id="species" class="text-black p-1">
+                <option value="">All</option>
+                <option value="human">Human</option>
+                <option value="alien">Alien</option>
+                <option value="humanoid">Humanoid</option>
+                <option value="poopybutthole">Poopybutthole</option>
+                <option value="mythological-creature">Mythological Creature</option>
+                <option value="animal">Animal</option>
+                <option value="robot">Robot</option>
+                <option value="cronenberg">Cronenberg</option>
+                <option value="disease">Disease</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <label for="gender" class="pr-1 pl-4 text-white">Select gender</label>
+            <select name="gender" id="gender" class="text-black p-1">
+                <option value="">All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="genderless">Genderless</option>
+                <option value="unknown">Unknown</option>
+            </select>
+            <button type="submit"
+                    class="border-2 rounded ml-6 py-1 w-24 text-white text-center border-l hover:bg-gray-800">
+                Search
+            </button>
+        </form>
+    </div>
+</div>
+<div class="flex justify-center">
+    <form action="/random">
+        <button type="submit" name="characterId"
+                class="border-2 rounded ml-6 px-6 py-1 text-white text-center border-l hover:bg-gray-800">
+            Show random character cards
+        </button>
+    </form>
+</div>

@@ -14,20 +14,29 @@ class CharacterController
         $this->client = new ApiClient();
     }
 
-    public function search(): View
+    public function index(): View
     {
-        $query = $_GET['character'];
+        $characters = $this->client->fetchRandomCharacters();
 
-        if (!empty($query)) {
-            $characters = $this->client->fetchCharactersByName($query);
-        } else {
-            $characters = $this->client->fetchRandomCharacters();
-        }
-
-        return new View('characters', [
+        return new View('index', [
             'characters' => $characters
         ]);
     }
+
+    public function random(): View
+    {
+        $characters = $this->client->fetchRandomCharacters();
+
+        return new View('randomCharacters', [
+            'characters' => $characters
+        ]);
+    }
+
+    public function characters(): View
+    {
+        return new View('characters', []);
+    }
+
 
     public function single(): View
     {
@@ -42,6 +51,31 @@ class CharacterController
         return new View('singleCharacter', [
             'character' => $character,
             'episodes' => $episodes
+        ]);
+    }
+
+    public function filter(): View
+    {
+        $name = $_GET['name'];
+        $status = $_GET['status'];
+        $species = $_GET['species'];
+        $gender = $_GET['gender'];
+
+        $characters = $this->client->filterCharacters($name, $status, $species, $gender);
+
+        $allCharacters = [];
+        if ($characters['pages'] > 1) {
+            $allCharacters[] = $characters['content'];
+            for ($i = 2; $i <= $characters['pages']; $i++) {
+                $allCharacters[] = $this->client->filterCharacters($name, $status, $species, $gender, $i)['content'];
+            }
+            $characters = array_merge(...$allCharacters);
+        } else {
+            $characters = $characters['content'];
+        }
+
+        return new View('filterCharacters', [
+            'characters' => $characters
         ]);
     }
 }

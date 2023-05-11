@@ -3,7 +3,7 @@
 {% block content %}
     <div class="flex flex-wrap gap-4 justify-center pt-8">
 
-        {{ block('character', 'base.html.twig') }}
+        {% include 'includes/characterCard.html.twig' %}
 
         <div class="relative overflow-x-auto shadow-md shadow-gray-500 rounded-lg">
             <div class="flex items-center p-3 text-xl justify-center font-bold text-white bg-gray-700 leading-8">
@@ -25,17 +25,17 @@
                 </thead>
                 <tbody>
                 {% for episode in episodes %}
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ episode.name }}
-                    </th>
-                    <td class="px-6 py-4">
-                        {{ episode.seasonId }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ episode.airDate }}
-                    </td>
-                </tr>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ episode.name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ episode.seasonId }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ episode.airDate }}
+                        </td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
