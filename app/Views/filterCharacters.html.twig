@@ -4,8 +4,13 @@
 
     {% include 'includes/filterBar.html.twig' %}
 
-    <div class="flex flex-wrap gap-4 justify-center pt-8">
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex flex-wrap justify-center pt-8">
+        {% if characters|length == 0 %}
+            <p class="text-xl text-white">
+                No characters found
+            </p>
+        {% endif %}
+        <div class="relative overflow-x-auto rounded-lg shadow-md shadow-gray-500">
             <table class="w-full text-sm text-left text-gray-400">
                 {% for character in characters %}
                     <tr class="border-b bg-gray-700 border-gray-600">
