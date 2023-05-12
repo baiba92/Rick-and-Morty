@@ -22,16 +22,17 @@ class ApiClient
     public function fetchRandomCharacters(): array
     {
         try {
-            if (!Cache::has('randomCharacters')) {
+            $page = floor(rand(1, 42));
+            if (!Cache::has('randomCharacters_' . $page)) {
                 $response = $this->client->get(self::BASE_API . '/character', [
                     'query' => [
-                        'page' => floor(rand(1, 42))
+                        'page' => $page
                     ]
                 ]);
                 $responseJson = $response->getBody()->getContents();
-                Cache::remember('randomCharacters', $responseJson, 10);
+                Cache::remember('randomCharacters_' . $page, $responseJson);
             } else {
-                $responseJson = Cache::get('randomCharacters');
+                $responseJson = Cache::get('randomCharacters_' . $page);
             }
 
             $characterContent = json_decode($responseJson);
@@ -48,23 +49,23 @@ class ApiClient
         string $status,
         string $species,
         string $gender,
-        int $page = 1
+        int    $page = 1
     ): array
     {
         try {
             $key = 'character_' . $name . '_' . $status . '_' . $species . '_' . $gender;
             if (!Cache::has($key)) {
-            $response = $this->client->get(self::BASE_API . '/character', [
-                'query' => [
-                    'page' => $page,
-                    'name' => $name,
-                    'status' => $status,
-                    'species' => $species,
-                    'gender' => $gender
-                ]
-            ]);
-            $responseJson = $response->getBody()->getContents();
-            Cache::remember($key, $responseJson);
+                $response = $this->client->get(self::BASE_API . '/character', [
+                    'query' => [
+                        'page' => $page,
+                        'name' => $name,
+                        'status' => $status,
+                        'species' => $species,
+                        'gender' => $gender
+                    ]
+                ]);
+                $responseJson = $response->getBody()->getContents();
+                Cache::remember($key, $responseJson);
             } else {
                 $responseJson = Cache::get($key);
             }
@@ -86,12 +87,13 @@ class ApiClient
     public function fetchCharactersById(array $ids): array
     {
         try {
-            if (!Cache::has('characters')) {
-                $response = $this->client->get(self::BASE_API . '/character/' . implode(',', $ids));
+            $ids = implode(',', $ids);
+            if (!Cache::has('characters_' . $ids)) {
+                $response = $this->client->get(self::BASE_API . '/character/' . $ids);
                 $responseJson = $response->getBody()->getContents();
-                Cache::remember('characters', $responseJson, 5);
+                Cache::remember('characters_' . $ids, $responseJson);
             } else {
-                $responseJson = Cache::get('characters');
+                $responseJson = Cache::get('characters_' . $ids);
             }
 
             $characterContent = (array)json_decode($responseJson);
@@ -121,15 +123,16 @@ class ApiClient
         }
     }
 
-    public function fetchLocationsById(array $ids): array
+    public function fetchAllLocations(): array
     {
         try {
-            if (!Cache::has('locations')) {
-                $response = $this->client->get(self::BASE_API . '/location/' . implode(',', $ids));
+            $locations = implode(',', range(1, 126));
+            if (!Cache::has('locations_')) {
+                $response = $this->client->get(self::BASE_API . '/location/' . $locations);
                 $responseJson = $response->getBody()->getContents();
-                Cache::remember('locations', $responseJson);
+                Cache::remember('locations_', $responseJson);
             } else {
-                $responseJson = Cache::get('locations');
+                $responseJson = Cache::get('locations_');
             }
 
             $locationContent = (array)json_decode($responseJson);
