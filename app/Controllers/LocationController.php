@@ -16,7 +16,7 @@ class LocationController
 
     public function all(): View
     {
-        $locations = $this->client->fetchLocationsById(range(1, 126));
+        $locations = $this->client->fetchAllLocations();
         return new View('locations', [
             'locations' => $locations
         ]);
